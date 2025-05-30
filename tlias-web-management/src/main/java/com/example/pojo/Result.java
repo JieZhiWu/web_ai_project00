@@ -1,8 +1,6 @@
-package com.example.pop;
+package com.example.pojo;
 
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * 后端统一返回结果

@@ -1,10 +1,10 @@
 package com.example.service;
 
-import com.example.pop.Emp;
-import com.example.pop.EmpQueryParm;
-import com.example.pop.PageResult;
+import com.example.pojo.Emp;
+import com.example.pojo.EmpQueryParm;
+import com.example.pojo.PageResult;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public interface EmpService {
 
@@ -17,6 +17,21 @@ public interface EmpService {
      * 保存员工信息
      */
     void save(Emp emp);
+
+    /**
+     * 删除员工信息
+     */
+    void delete(List<Integer> ids);
+
+    /**
+     * 返回员工信息
+     */
+    Emp getInfo(Integer id);
+
+    /**
+     * 更新员工信息
+     */
+    void update(Emp emp);
     /**
      * 分页查询
      * @param page 页码

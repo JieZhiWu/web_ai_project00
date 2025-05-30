@@ -1,4 +1,4 @@
-package com.example.pop;
+package com.example.pojo;
 
 import lombok.Data;
 
@@ -23,5 +23,5 @@ public class Emp {
     private LocalDateTime updateTime; //修改时间
 
     private String deptName; //部门名称
-    private List<EmpExpr> exprList; //关联的Expr
+    private List<EmpExpr> exprList; //关联的Expr工作信息
 }

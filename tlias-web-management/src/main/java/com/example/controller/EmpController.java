@@ -1,16 +1,15 @@
 package com.example.controller;
 
-import com.example.pop.Emp;
-import com.example.pop.EmpQueryParm;
-import com.example.pop.PageResult;
-import com.example.pop.Result;
+import com.example.pojo.Emp;
+import com.example.pojo.EmpQueryParm;
+import com.example.pojo.PageResult;
+import com.example.pojo.Result;
 import com.example.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.util.List;
 
 /**
  * 员工管理Controller
@@ -56,4 +55,27 @@ public class EmpController {
         return Result.success();
     }
 
+    /**
+     * 员工删除
+     */
+    @DeleteMapping
+    public Result delete(@RequestParam List<Integer> ids) {
+        log.info("员工删除,员工id: {}", ids);
+        empService.delete(ids);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    public Result getInfo(@PathVariable Integer id){
+        log.info("根据id查询员工信息: {}", id);
+        Emp emp = empService.getInfo(id);
+        return Result.success(emp);
+    }
+
+    @PutMapping
+    public Result update(@RequestBody Emp emp){
+        log.info("员工修改,员工信息: {}", emp);
+        empService.update(emp);
+        return Result.success();
+    }
 }

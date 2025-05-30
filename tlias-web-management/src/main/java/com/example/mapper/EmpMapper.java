@@ -1,13 +1,11 @@
 package com.example.mapper;
 
-import com.example.pop.Emp;
-import com.example.pop.EmpQueryParm;
+import com.example.pojo.Emp;
+import com.example.pojo.EmpQueryParm;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -40,4 +38,18 @@ public interface EmpMapper {
             "values(#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
     void insert(Emp emp);
 
+    /**
+     *根据ID批量删除员工
+     */
+    void deleteByIds(List<Integer> ids);
+
+    /**
+     * 根据ID查询员工信息
+     */
+    Emp getById(Integer id);
+
+    /**
+     * 更新员工信息
+     */
+    void updateById(Emp emp);
 }

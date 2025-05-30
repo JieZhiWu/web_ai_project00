@@ -1,9 +1,7 @@
 package com.example.mapper;
 
-import com.example.pop.Dept;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.pojo.Dept;
 import org.apache.ibatis.annotations.*;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
