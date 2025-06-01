@@ -3,10 +3,12 @@ package com.example.mapper;
 import com.example.pojo.Emp;
 import com.example.pojo.EmpQueryParm;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 员工信息
@@ -52,4 +54,14 @@ public interface EmpMapper {
      * 更新员工信息
      */
     void updateById(Emp emp);
+
+     /**
+     * 查询员工职位人数
+     */
+    List<Map< String,Object>> countEmpJobData();
+
+     /**
+     * 查询员工性别人数
+     */
+    List<Map<String, Object>> countEmpGenderData();
 }
