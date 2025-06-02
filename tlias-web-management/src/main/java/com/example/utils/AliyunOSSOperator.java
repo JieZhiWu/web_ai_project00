@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Component
-public class AliyunOSSOperator {
+public class AliyunOSSOperator { // 创建一个类，实现上传功能
     //方法一: 通过 value 注入
 /*
     @Value("${aliyun.oss.endpoint}")

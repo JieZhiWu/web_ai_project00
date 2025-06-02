@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "aliyun.oss")
-public class AliyunOOSProperties {
+public class AliyunOOSProperties { //阿里云OSS配置
     private String endpoint;
     private String bucketName;
     private String region;
