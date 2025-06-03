@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.pojo.ClazzCountOption;
 import com.example.pojo.JobOption;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +17,9 @@ public interface ReportService {
      * 获取员工性别人数
      */
     List<Map<String, Object>> getEmpGenderData();
+
+
+    List<Map> getStudentDegreeData();
+
+    ClazzCountOption getStudentCountData();
 }

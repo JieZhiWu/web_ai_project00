@@ -1,10 +1,13 @@
 package com.example.service.impl;
 
 import com.example.mapper.EmpMapper;
+import com.example.mapper.StudentMapper;
+import com.example.pojo.ClazzCountOption;
 import com.example.pojo.JobOption;
 import com.example.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -14,6 +17,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private EmpMapper empMapper;
+    @Autowired
+    private StudentMapper studentMapper;
 
     @Override
     public JobOption getEmpJobData() {
@@ -35,4 +40,27 @@ public class ReportServiceImpl implements ReportService {
     public List<Map<String, Object>> getEmpGenderData() {
         return empMapper.countEmpGenderData();
     }
+
+    @Override
+    public List<Map> getStudentDegreeData() {
+        return studentMapper.getStudentDegreeData();
+    }
+
+    @Override
+    public ClazzCountOption getStudentCountData() {
+        List<Map<String, Object>> countList = studentMapper.getStudentCount();
+        if(!CollectionUtils.isEmpty(countList)){
+            List<Object> clazzList = countList.stream().map(map -> {
+                return map.get("cname");
+            }).toList();
+
+            List<Object> dataList = countList.stream().map(map -> {
+                return map.get("scount");
+            }).toList();
+
+            return new ClazzCountOption(clazzList, dataList);
+        }
+        return null;
+    }
+
 }

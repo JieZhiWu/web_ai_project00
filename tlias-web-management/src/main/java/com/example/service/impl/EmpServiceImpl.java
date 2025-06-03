@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class EmpServiceImp implements EmpService {
+public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpMapper empMapper;

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ClazzServiceImp implements ClazzService {
+public class ClazzServiceImpl implements ClazzService {
 
     @Autowired
     private ClazzMapper clazzMapper;
@@ -56,9 +56,9 @@ public class ClazzServiceImp implements ClazzService {
 
     @Override
     public void delete(Integer id) {
-//         if (studentMapper.countByClazzId(id) > 0) {
-//            throw new RuntimeException("该班级下有学生，无法删除");
-//        }
+         if (studentMapper.countByClazzId(id) > 0) {
+            throw new RuntimeException("该班级下有学生，无法删除");
+        }
         clazzMapper.deleteById(id);
     }
 
