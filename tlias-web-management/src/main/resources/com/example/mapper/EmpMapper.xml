@@ -66,6 +66,41 @@
         order by e.update_time
     </select>
 
+    <select id="logList" resultType="com.example.pojo.OperateLog">
+        select l.*, e.name operateEmpName
+        from operate_log l left join emp e on l.operate_emp_id = e.id
+        where 1=1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="operateEmpId != null">
+            and operate_emp_id = #{operateEmpId}
+        </if>
+        <if test="operateTime != null">
+            and operate_time between #{operateTime}
+        </if>
+        <if test="className != null">
+            and className like concat('%',#{className},'%')
+        </if>
+        <if test="methodName != null">
+            and method_name like concat('%',#{methodName},'%')
+        </if>
+        <if test="methodParams != null">
+            and method_params like concat('%',#{methodParams},'%')
+        </if>
+        <if test="returnValue != null">
+            and return_value like concat('%',#{returnValue},'%')
+        </if>
+        <if test="costTime != null">
+            and cost_time = #{costTime}
+        </if>
+        <if test="operateEmpName != null">
+            and operate_emp_name like concat('%',#{operateEmpName},'%')
+        </if>
+        order by operate_time
+    </select>
+
+
     <!--自定义结果集封装-->
     <resultMap id="empResultMap" type="com.example.pojo.Emp">
         <id property="id" column="id"/>

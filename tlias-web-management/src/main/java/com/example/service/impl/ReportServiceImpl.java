@@ -1,10 +1,12 @@
 package com.example.service.impl;
 
 import com.example.mapper.EmpMapper;
+import com.example.mapper.LogMapper;
 import com.example.mapper.StudentMapper;
-import com.example.pojo.ClazzCountOption;
-import com.example.pojo.JobOption;
+import com.example.pojo.*;
 import com.example.service.ReportService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -19,6 +21,8 @@ public class ReportServiceImpl implements ReportService {
     private EmpMapper empMapper;
     @Autowired
     private StudentMapper studentMapper;
+    @Autowired
+    private LogMapper logMapper;
 
     @Override
     public JobOption getEmpJobData() {
@@ -46,6 +50,7 @@ public class ReportServiceImpl implements ReportService {
         return studentMapper.getStudentDegreeData();
     }
 
+
     @Override
     public ClazzCountOption getStudentCountData() {
         List<Map<String, Object>> countList = studentMapper.getStudentCount();
@@ -62,5 +67,16 @@ public class ReportServiceImpl implements ReportService {
         }
         return null;
     }
+
+    @Override
+    public PageResult<OperateLog> page(LogQueryParm logQueryParm) {
+        PageHelper.startPage(logQueryParm.getPage(), logQueryParm.getPageSize());
+
+        List<OperateLog> logList = empMapper.logList(logQueryParm);
+
+        Page<OperateLog> p = (Page<OperateLog>) logList;
+        return new PageResult<>(p.getTotal(), p.getResult());
+    }
+
 
 }

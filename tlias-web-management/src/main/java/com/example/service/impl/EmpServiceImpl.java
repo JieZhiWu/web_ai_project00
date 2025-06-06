@@ -6,8 +6,10 @@ import com.example.mapper.EmpMapper;
 import com.example.pojo.*;
 import com.example.service.EmpLogService;
 import com.example.service.EmpService;
+import com.example.utils.JwtUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +17,11 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Service
 public class EmpServiceImpl implements EmpService {
 
@@ -42,9 +47,11 @@ public class EmpServiceImpl implements EmpService {
              * 批量插入工作信息
              */
             List<EmpExpr> exprList = emp.getExprList();
-            if (!CollectionUtils.isEmpty(exprList)){
+            if (!CollectionUtils.isEmpty(exprList)) {
                 //遍历集合,为每个元素添加员工id
-                exprList.forEach(empExpr -> {empExpr.setEmpId(emp.getId());});
+                exprList.forEach(empExpr -> {
+                    empExpr.setEmpId(emp.getId());
+                });
                 empExprMapper.insertBatch(exprList);
             }
         } finally {
@@ -83,7 +90,7 @@ public class EmpServiceImpl implements EmpService {
 
         //批量插入工作信息
         List<EmpExpr> exprList = emp.getExprList();
-        if (!CollectionUtils.isEmpty(exprList)){
+        if (!CollectionUtils.isEmpty(exprList)) {
             //遍历集合,为每个元素添加员工id
             exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
             empExprMapper.insertBatch(exprList);
@@ -91,16 +98,35 @@ public class EmpServiceImpl implements EmpService {
     }
 
     /**
+     * 员工登录
+     */
+    @Override
+    public LoginInfo login(Emp emp) {
+        Emp e = empMapper.selectByUsernameAndPassword(emp);
+        if (e != null) {
+            log.info("登录成功,员工信息: {}", e);
+            //生成JWT令牌
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", e.getId());
+            claims.put("username", e.getUsername());
+            String token = JwtUtils.generateToken(claims);
+
+            return new LoginInfo(e.getId(), e.getUsername(), e.getName(), token);
+        }
+        return null;
+    }
+
+    /**
      * 分页查询员工信息
      */
     @Override
     public PageResult<Emp> page(EmpQueryParm empQueryParm) {
-        PageHelper.startPage(empQueryParm.getPage(),empQueryParm.getPageSize());
+        PageHelper.startPage(empQueryParm.getPage(), empQueryParm.getPageSize());
 
         List<Emp> empList = empMapper.list(empQueryParm);
 
         Page<Emp> p = (Page<Emp>) empList;
-        return new PageResult<>(p.getTotal(),p.getResult());
+        return new PageResult<>(p.getTotal(), p.getResult());
     }
 
 /*    @Override

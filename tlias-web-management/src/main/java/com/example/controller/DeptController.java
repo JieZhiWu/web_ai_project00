@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.anno.Log;
 import com.example.pojo.Dept;
 import com.example.pojo.Result;
 import com.example.service.DeptService;
@@ -62,6 +63,7 @@ public class DeptController {
      * 根据id删除部门信息
      * 方式三:省略@RequestParam注解，使用形参接收参数与前端参数名称一致
      */
+    @Log
     @DeleteMapping
     public Result deleteById(Integer id) {
         System.out.println("根据id删除部门信息: " + id);
@@ -73,6 +75,7 @@ public class DeptController {
     /**
      * 新增部门信息
      */
+    @Log
     @PostMapping
     public Result add(@RequestBody Dept dept) {
         System.out.println("新增部门信息: " + dept);
@@ -95,6 +98,7 @@ public class DeptController {
     /**
      * 修改部门信息
      */
+    @Log
     @PutMapping
     public Result update(@RequestBody Dept dept) {
         System.out.println("修改部门信息: " + dept);

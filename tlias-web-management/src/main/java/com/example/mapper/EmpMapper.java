@@ -2,10 +2,9 @@ package com.example.mapper;
 
 import com.example.pojo.Emp;
 import com.example.pojo.EmpQueryParm;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.MapKey;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import com.example.pojo.LogQueryParm;
+import com.example.pojo.OperateLog;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,6 @@ public interface EmpMapper {
 
 //    @Select("select e.*,d.name deptName from emp e left join dept d on e.dept_id = d.id " +
 //            "order by e.update_time desc")
-    public List<Emp> list(EmpQueryParm empQueryParm);
 
     /**
      * 保存员工信息
@@ -64,4 +62,11 @@ public interface EmpMapper {
      * 查询员工性别人数
      */
     List<Map<String, Object>> countEmpGenderData();
+
+    @Select("select id, username, name  from emp where username = #{username} and password = #{password}")
+    Emp selectByUsernameAndPassword(Emp emp);
+
+    List<Emp> list(EmpQueryParm empQueryParm);
+
+    List<OperateLog> logList(LogQueryParm logQueryParm);
 }
